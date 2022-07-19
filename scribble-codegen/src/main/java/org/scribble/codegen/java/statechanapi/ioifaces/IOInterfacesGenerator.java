@@ -196,6 +196,13 @@ public class IOInterfacesGenerator extends ApiGen
 				.forEach(ib -> output.put(prefix + ib.getName() + ".java", ib.build()));
 		this.iostates.values()
 				.forEach(tb -> output.put(prefix + tb.getName() + ".java", tb.build()));
+		for(InterfaceBuilder tb : this.iostates.values()){
+			if(tb.getName().contains("MS")){
+				output.remove(prefix + tb.getName() + ".java");
+				String MSPrefix = getMSIOInterfacePackageName(this.gpn, getSelf()).replace('.', '/') + "/";
+				output.put(MSPrefix + tb.getName() + ".java", tb.build());
+			}
+		}
 
 		this.caseActions.values()
 				.forEach(ib -> output.put(prefix + ib.getName() + ".java", ib.build()));
@@ -290,6 +297,9 @@ public class IOInterfacesGenerator extends ApiGen
 				case POLY_RECIEVE:
 					InterfaceBuilder cases = new CaseIfaceGen(this.apigen, this.actions, s).generateType();
 					this.iostates.put(cases.getName(), cases);
+					//generate an interface for ms
+					InterfaceBuilder branches = new BranchInterfaceGen(this.apigen, this.actions, s).generateType();
+					this.iostates.put(branches.getName(), branches);
 					ifgen = new BranchIfaceGen(this.apigen, this.actions, s);
 					break;
 				case TERMINAL:
@@ -1048,6 +1058,10 @@ public class IOInterfacesGenerator extends ApiGen
 	protected static String getIOInterfacePackageName(GProtoName gpn, Role self)
 	{
 		return SessionApiGenerator.getStateChannelPackageName(gpn, self) + ".ioifaces";
+	}
+
+	protected static String getMSIOInterfacePackageName(GProtoName gpn, Role self){
+		return SessionApiGenerator.getMSChannelPackageName(gpn, self) + ".ioifaces";
 	}
 	
 	protected InterfaceBuilder getIOStateInterface(String name)

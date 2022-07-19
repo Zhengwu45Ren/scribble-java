@@ -223,6 +223,15 @@ public class StateChannelApiGenerator extends ApiGen
 	{
 		return this.classNames.get(s);
 	}
+
+	public String getMSClassName(EState s){
+		String className = this.classNames.get(s);
+		if(className != null){
+			return className.replaceAll("_","") + "MS";
+		}else {
+			return null;
+		}
+	}
 	
 	public TypeBuilder getType(String key)
 	{

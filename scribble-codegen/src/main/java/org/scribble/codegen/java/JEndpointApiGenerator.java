@@ -16,6 +16,7 @@ package org.scribble.codegen.java;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.scribble.codegen.java.msapi.StateMSApiGenerator;
 import org.scribble.codegen.java.sessionapi.SessionApiGenerator;
 import org.scribble.codegen.java.statechanapi.StateChannelApiGenerator;
 import org.scribble.codegen.java.statechanapi.ioifaces.IOInterfacesGenerator;
@@ -57,6 +58,7 @@ public class JEndpointApiGenerator
 				+ StateChannelApiGenerator.class + " for " + fullname + "@" + self);
 		StateChannelApiGenerator apigen = new StateChannelApiGenerator(this.job,
 				fullname, self);
+		StateMSApiGenerator stateMsApiGenerator = new StateMSApiGenerator(this.job, fullname, self);
 		IOInterfacesGenerator iogen = null;
 		try
 		{
@@ -71,6 +73,7 @@ public class JEndpointApiGenerator
 		// Construct the Generators first, to build all the types -- then call generate to "compile" all Builders to text (further building changes will not be output)
 		Map<String, String> api = new HashMap<>(); // filepath -> class source  // Store results?
 		api.putAll(apigen.generateApi());
+		api.putAll(stateMsApiGenerator.generateApi());
 		if (iogen != null)
 		{
 			api.putAll(iogen.generateApi());

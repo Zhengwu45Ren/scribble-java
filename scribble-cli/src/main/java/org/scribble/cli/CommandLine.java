@@ -17,11 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -30,10 +26,12 @@ import org.scribble.ast.ProtoDecl;
 import org.scribble.ast.global.GProtoDecl;
 import org.scribble.codegen.java.JEndpointApiGenerator;
 import org.scribble.codegen.java.callbackapi.CBEndpointApiGenerator3;
+import org.scribble.core.job.Core;
 import org.scribble.core.job.CoreArgs;
 import org.scribble.core.job.CoreContext;
 import org.scribble.core.model.endpoint.EGraph;
 import org.scribble.core.model.global.SGraph;
+import org.scribble.core.type.kind.Global;
 import org.scribble.core.type.kind.Local;
 import org.scribble.core.type.name.GProtoName;
 import org.scribble.core.type.name.LProtoName;
@@ -274,6 +272,20 @@ public class CommandLine
 		Job job = mc.newJob();  // A Job is some series of passes performed on each Module in the MainContext (e.g., cf. Job::runVisitorPass)
 		ScribException err = null;
 		try { doValidationTasks(job); } catch (ScribException x) { err = x; }
+
+		CoreContext context = job.getCore().getContext();
+		Set<ProtoName<Global>> parsedFullNames = context.getParsedFullnames();
+		System.out.println(parsedFullNames);
+
+		for(ProtoName<Global> each : parsedFullNames){
+			List<Role> roles = context.getIntermediate(each).roles;
+			for(Role eachRole : roles){
+				System.out.println(eachRole.toString());
+				EGraph proto = context.getEGraph(each, eachRole);
+				System.out.println(proto.init.getActions());
+			}
+		}
+
 		for (Pair<String, String[]> a : this.args)
 		{
 			CLFlag flag = this.flags.explicit.get(a.left);  // null for CLFlags.MAIN_MOD_FLAG

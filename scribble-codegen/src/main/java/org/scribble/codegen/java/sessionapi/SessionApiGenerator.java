@@ -280,6 +280,11 @@ public class SessionApiGenerator extends ApiGen
 	{
 		return getEndpointApiRootPackageName(gpn) + ".statechans." + self;
 	}
+
+	public static String getMSChannelPackageName(GProtoName gpn, Role self)
+	{
+		return getEndpointApiRootPackageName(gpn) + ".ms." + self;
+	}
 	
 	// Returns the simple Role Class name
 	public static String getRoleClassName(Role r)
