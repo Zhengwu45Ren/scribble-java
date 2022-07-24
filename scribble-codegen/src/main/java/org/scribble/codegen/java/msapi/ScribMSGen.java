@@ -116,7 +116,6 @@ public abstract class ScribMSGen extends ScribSockGen {
 
     protected String getStateChannelPackageName()
     {
-        System.out.println(this.apigen.getGProtocolName().toString());
         //return getSessionPackageName() + ".channels." + this.apigen.getSelf();
         return this.apigen.getGProtocolName().toString() + ".ms." + this.apigen.getSelf();
     }
@@ -150,7 +149,6 @@ public abstract class ScribMSGen extends ScribSockGen {
         else
         {
             nextClass = this.apigen.getMSClassName(s);
-            System.out.println(nextClass);
         }
         mb.addBodyLine(JavaBuilder.RETURN + " " + JavaBuilder.NEW + " " + nextClass + "(" + SCRIBSOCKET_SE_FIELD + ", true);");
     }

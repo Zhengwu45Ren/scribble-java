@@ -273,18 +273,18 @@ public class CommandLine
 		ScribException err = null;
 		try { doValidationTasks(job); } catch (ScribException x) { err = x; }
 
-		CoreContext context = job.getCore().getContext();
-		Set<ProtoName<Global>> parsedFullNames = context.getParsedFullnames();
-		System.out.println(parsedFullNames);
-
-		for(ProtoName<Global> each : parsedFullNames){
-			List<Role> roles = context.getIntermediate(each).roles;
-			for(Role eachRole : roles){
-				System.out.println(eachRole.toString());
-				EGraph proto = context.getEGraph(each, eachRole);
-				System.out.println(proto.init.getActions());
-			}
-		}
+//		CoreContext context = job.getCore().getContext();
+//		Set<ProtoName<Global>> parsedFullNames = context.getParsedFullnames();
+//		System.out.println(parsedFullNames);
+//
+//		for(ProtoName<Global> each : parsedFullNames){
+//			List<Role> roles = context.getIntermediate(each).roles;
+//			for(Role eachRole : roles){
+//				System.out.println(eachRole.toString());
+//				EGraph proto = context.getEGraph(each, eachRole);
+//				System.out.println(proto.init.getActions());
+//			}
+//		}
 
 		for (Pair<String, String[]> a : this.args)
 		{
