@@ -11,16 +11,30 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.scribble.runtime.statechans;
+package org.scribble.runtime.ms;
 
+import org.scribble.core.type.name.Op;
 import org.scribble.core.type.name.Role;
+import org.scribble.runtime.message.ScribMessage;
 import org.scribble.runtime.session.MSConnect;
 import org.scribble.runtime.session.MSEndpoint;
 
-public class CaseMS<R extends Role> extends MSConnect<R> {
-    public CaseMS(){}
+import javax.jms.JMSException;
+import javax.jms.ObjectMessage;
 
-    public CaseMS(MSEndpoint<R> msEndpoint){
-        this.msEndpoint = msEndpoint;
+public class SendMS<R extends Role> extends MSConnect<R> {
+    protected SendMS(){}
+
+    protected SendMS(MSEndpoint<R> msEndpoint) {
+        super(msEndpoint);
+    }
+
+    public void sendScrib(Role peer, Op op, Object... payload){
+        try {
+            ObjectMessage objectMessage = this.msEndpoint.session.createObjectMessage(new ScribMessage(op, payload));
+            this.msEndpoint.producer.send(objectMessage);
+        } catch (JMSException e) {
+            throw new RuntimeException("Error creating message", e);
+        }
     }
 }

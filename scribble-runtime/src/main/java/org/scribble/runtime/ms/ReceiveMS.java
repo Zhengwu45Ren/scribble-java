@@ -11,18 +11,31 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.scribble.runtime.statechans;
+package org.scribble.runtime.ms;
 
 import org.scribble.core.type.name.Role;
+import org.scribble.runtime.message.ScribMessage;
 import org.scribble.runtime.session.MSConnect;
 import org.scribble.runtime.session.MSEndpoint;
 
-public class EndMS<R extends Role> extends MSConnect<R> {
-    public EndMS(){
+import javax.jms.JMSException;
+import javax.jms.ObjectMessage;
 
-    }
+public class ReceiveMS<R extends Role> extends MSConnect<R> {
+    protected ReceiveMS(){}
 
-    public EndMS(MSEndpoint<R> msEndpoint){
+    protected ReceiveMS(MSEndpoint<R> msEndpoint){
         this.msEndpoint = msEndpoint;
     }
+
+    public ScribMessage receiveScrib(Role peer){
+        try {
+            ObjectMessage message = (ObjectMessage) this.msEndpoint.roleConsumerMap.get(peer.toString()).receive();
+            ScribMessage scribMessage = (ScribMessage) message.getObject();
+            return scribMessage;
+        } catch (JMSException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

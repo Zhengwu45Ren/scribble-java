@@ -11,15 +11,18 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package org.scribble.runtime.statechans;
+package org.scribble.runtime.ms;
 
 import org.scribble.core.type.name.Role;
+import org.scribble.runtime.session.MSConnect;
 import org.scribble.runtime.session.MSEndpoint;
 
-public class BranchMS<R extends Role> extends ReceiveMS<R> {
-    public BranchMS(){}
+public class EndMS<R extends Role> extends MSConnect<R> {
+    public EndMS(){
 
-    public BranchMS(MSEndpoint<R> msEndpoint){
+    }
+
+    public EndMS(MSEndpoint<R> msEndpoint){
         this.msEndpoint = msEndpoint;
     }
 }

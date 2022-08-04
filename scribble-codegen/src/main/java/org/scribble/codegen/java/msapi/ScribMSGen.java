@@ -29,11 +29,11 @@ public abstract class ScribMSGen extends ScribSockGen {
     protected final EState curr;
     protected final String className;
     protected final StateMSApiGenerator stateMSApiGenerator;
-    public static final String OUTPUTMS_CLASS = "org.scribble.runtime.statechans.SendMS";
-    public static final String RECEIVEMS_CLASS = "org.scribble.runtime.statechans.ReceiveMS";
-    public static final String BRANCHMS_CLASS = "org.scribble.runtime.statechans.BranchMS";
-    public static final String CASEMS_CLASS = "org.scribble.runtime.statechans.CaseMS";
-    public static final String ENDMS_CLASS = "org.scribble.runtime.statechans.EndMS";
+    public static final String OUTPUTMS_CLASS = "org.scribble.runtime.ms.SendMS";
+    public static final String RECEIVEMS_CLASS = "org.scribble.runtime.ms.ReceiveMS";
+    public static final String BRANCHMS_CLASS = "org.scribble.runtime.ms.BranchMS";
+    public static final String CASEMS_CLASS = "org.scribble.runtime.ms.CaseMS";
+    public static final String ENDMS_CLASS = "org.scribble.runtime.ms.EndMS";
     public static final String CONNECTION_CLASS = "org.scribble.runtime.session.MSEndpoint";
     public static final String GENERATED_ENDMS_NAME = "EndSocketMS";
     public static final String SCRIBSOCKET_SE_FIELD = JavaBuilder.THIS + ".msEndpoint";
