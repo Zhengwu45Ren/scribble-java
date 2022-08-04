@@ -149,17 +149,13 @@ public class StateMSApiGenerator extends StateChannelApiGenerator {
     }
 
     // Pre: curr is not terminal state
-    private ClassBuilder constructClass(EState curr) throws ScribException  // FIXME: APIGenerationException?
+    private ClassBuilder constructClass(EState curr) throws ScribException
     {
         switch (curr.getStateKind())
         {
             case OUTPUT:
             {
-				/*Set<IOAction> as = curr.getTakeable();
-				if (as.stream().allMatch((a) -> a.isSend()))*/
-                {
-                    return new SendMSGen(this, curr).generateType();
-                }
+                return new SendMSGen(this, curr).generateType();
             }
             case ACCEPT:
             {
