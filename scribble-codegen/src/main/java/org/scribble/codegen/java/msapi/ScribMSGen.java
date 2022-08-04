@@ -37,6 +37,7 @@ public abstract class ScribMSGen extends ScribSockGen {
     public static final String CONNECTION_CLASS = "org.scribble.runtime.session.MSEndpoint";
     public static final String GENERATED_ENDMS_NAME = "EndSocketMS";
     public static final String SCRIBSOCKET_SE_FIELD = JavaBuilder.THIS + ".msEndpoint";
+    private static final String CONNECTION_PAR = "msEndpoint";
 
     protected final ClassBuilder cb = new ClassBuilder();
 
@@ -88,7 +89,6 @@ public abstract class ScribMSGen extends ScribSockGen {
 
     protected MethodBuilder addConstructor()
     {
-        final String CONNECTION_PAR = "msEndpoint";
         ConstructorBuilder ctor = cb.newConstructor(
                 CONNECTION_CLASS + "<" + getSelfClassName() + ">" + " " + CONNECTION_PAR, "boolean dummy");
         ctor.addModifiers(JavaBuilder.PROTECTED);
@@ -101,17 +101,10 @@ public abstract class ScribMSGen extends ScribSockGen {
 
     protected void addInitialStateConstructor()
     {
-        final String CONNECTION_PAR = "msEndpoint";
-
-        List<Role> roles = this.apigen.getJob().getCore().getContext().getIntermediate(this.apigen.getGProtocolName()).roles;
-
         ConstructorBuilder ctor2 = cb.newConstructor(
                 CONNECTION_CLASS + "<" + getSelfClassName() + ">" + " " + CONNECTION_PAR);
-
-//        ctor2.addExceptions(StateChannelApiGenerator.SCRIBBLERUNTIMEEXCEPTION_CLASS);
         ctor2.addModifiers(JavaBuilder.PUBLIC);
         ctor2.addBodyLine(JavaBuilder.SUPER + "(" + CONNECTION_PAR + ");");
-//        ctor2.addBodyLine(CONNECTION_PAR + ".init();");
     }
 
     protected String getStateChannelPackageName()
