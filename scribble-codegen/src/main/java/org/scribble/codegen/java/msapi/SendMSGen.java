@@ -32,9 +32,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class OutputMSGen extends ScribMSGen{
+public class SendMSGen extends ScribMSGen{
 
-    public OutputMSGen(StateMSApiGenerator apiGen, EState curr) {
+    public SendMSGen(StateMSApiGenerator apiGen, EState curr) {
         super(apiGen, curr);
     }
 

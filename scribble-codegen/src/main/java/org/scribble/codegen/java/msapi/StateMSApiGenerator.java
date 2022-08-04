@@ -158,7 +158,7 @@ public class StateMSApiGenerator extends StateChannelApiGenerator {
 				/*Set<IOAction> as = curr.getTakeable();
 				if (as.stream().allMatch((a) -> a.isSend()))*/
                 {
-                    return new OutputMSGen(this, curr).generateType();
+                    return new SendMSGen(this, curr).generateType();
                 }
             }
             case ACCEPT:
