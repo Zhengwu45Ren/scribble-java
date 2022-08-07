@@ -28,7 +28,7 @@ public class MSEndpoint<R extends Role>{
     public Map<String, MessageConsumer> roleConsumerMap;
     private boolean complete = false;
     private boolean closed = false;
-    private Role self;
+    private final Role self;
 
     public MSEndpoint(R self, Connection connection){
         this.connection = connection;
@@ -46,7 +46,9 @@ public class MSEndpoint<R extends Role>{
     public void connect(Role role){
         try {
             Destination destination = session.createQueue(role.toString());
-            this.roleConsumerMap.put(role.toString(), session.createConsumer(destination));
+            this.roleConsumerMap.put(role.toString(),
+                    session.createConsumer(destination,
+                            "Role = '" + self.toString() + "'"));
         } catch (JMSException e) {
             throw new RuntimeException("Error when initiate connection", e);
         }

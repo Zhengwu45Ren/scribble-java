@@ -31,7 +31,9 @@ public class SendMS<R extends Role> extends MSConnect<R> {
 
     public void sendScrib(Role peer, Op op, Object... payload){
         try {
-            ObjectMessage objectMessage = this.msEndpoint.session.createObjectMessage(new ScribMessage(op, payload));
+            ObjectMessage objectMessage =
+                    this.msEndpoint.session.createObjectMessage(new ScribMessage(op, payload));
+            objectMessage.setStringProperty("Role", peer.toString());
             this.msEndpoint.producer.send(objectMessage);
         } catch (JMSException e) {
             throw new RuntimeException("Error creating message", e);
